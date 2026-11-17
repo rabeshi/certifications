@@ -1,0 +1,1116 @@
+{
+  "3": [
+    {
+      "label": "Prompt shields action",
+      "choices": [
+        "Disable the shield.",
+        "Set action to block.",
+        "Set action to annotate."
+      ],
+      "answer": "Set action to block."
+    },
+    {
+      "label": "Additional mitigation",
+      "choices": [
+        "Enable Spotlighting.",
+        "Create a custom blocklist.",
+        "Use optical character recognition (OCR) to extract the text from the images first."
+      ],
+      "answer": "Enable Spotlighting."
+    }
+  ],
+  "9": [
+    {
+      "label": "Evaluation comparison",
+      "choices": [
+        "Compare against the latest approved baseline",
+        "Compare against the previous workflow run",
+        "Compare against the production deployment logs",
+        "Compare against the repository default branch"
+      ],
+      "answer": "Compare against the latest approved baseline"
+    },
+    {
+      "label": "If evaluation regression exceeds the configured tolerance",
+      "choices": [
+        "Continue deployment and send an alert",
+        "Fail the workflow",
+        "Retry the evaluation automatically",
+        "Lock the target branch"
+      ],
+      "answer": "Fail the workflow"
+    }
+  ],
+  "10": [
+    {
+      "label": "The LangChain service will appear in Traces without configuring a tracer.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No"
+    },
+    {
+      "label": "Setting different OTEL_SERVICE_NAME values separates the services in Application Insights.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes"
+    },
+    {
+      "label": "When using enable_content_recording=False, prompts and tool data will be captured in the telemetry.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No"
+    }
+  ],
+  "13": [
+    {
+      "label": "Set tool_choice to",
+      "choices": [
+        "auto",
+        "none",
+        "required"
+      ],
+      "answer": "required"
+    },
+    {
+      "label": "Configure the tool to authenticate by",
+      "choices": [
+        "Storing API keys in prompts",
+        "Using the shared project agent identity",
+        "Using a distinct agent identity bound to the client application"
+      ],
+      "answer": "Using a distinct agent identity bound to the client application"
+    }
+  ],
+  "19": [
+    {
+      "label": "Evaluation to execute",
+      "choices": [
+        "Groundedness evaluation",
+        "Fluency evaluation",
+        "Similarity evaluation",
+        "Content Safety evaluation"
+      ],
+      "answer": "Groundedness evaluation"
+    },
+    {
+      "label": "Pull request policy",
+      "choices": [
+        "Require the evaluation workflow to succeed before merging",
+        "Automatically rerun failed evaluations until they pass",
+        "Notify reviewers when evaluations fail",
+        "Allow the merge and run evaluations after deployment"
+      ],
+      "answer": "Require the evaluation workflow to succeed before merging"
+    }
+  ],
+  "23": [
+    {
+      "label": "Metrics to enable",
+      "choices": [
+        "Model Availability Rate and Provisioned Utilization",
+        "Only Tokens Cache Match Rate",
+        "Only Total Requests filtered to status code 200",
+        "Time To Response and Total Tokens"
+      ],
+      "answer": "Model Availability Rate and Provisioned Utilization"
+    },
+    {
+      "label": "Diagnostic log to collect",
+      "choices": [
+        "AllMetrics",
+        "audit",
+        "RequestResponse",
+        "trace"
+      ],
+      "answer": "RequestResponse"
+    }
+  ],
+  "29": [
+    {
+      "label": "To retain user preferences across conversations, use",
+      "choices": [
+        "Agent memory that uses persistent storage",
+        "Conversation history",
+        "Orchestration-managed session context"
+      ],
+      "answer": "Agent memory that uses persistent storage"
+    },
+    {
+      "label": "To enable users to provide contextual grounding during chats, use the",
+      "choices": [
+        "Azure AI Search tool",
+        "Code interpreter tool",
+        "File search tool"
+      ],
+      "answer": "File search tool"
+    }
+  ],
+  "33": [
+    {
+      "label": "Type",
+      "choices": [
+        "ask_question",
+        "basic_chat",
+        "data_transformation"
+      ],
+      "answer": "ask_question"
+    },
+    {
+      "label": "Condition",
+      "choices": [
+        "approval == \"approved\"",
+        "propose_refund.output != null",
+        "true"
+      ],
+      "answer": "approval == \"approved\""
+    }
+  ],
+  "43": [
+    {
+      "label": "If/else condition expression",
+      "choices": [
+        "IsBlank(Local.Var01)",
+        "IsEmpty(Local.Var01)",
+        "Not(IsBlank(Local.Var01))"
+      ],
+      "answer": "Not(IsBlank(Local.Var01))"
+    },
+    {
+      "label": "Send message expression",
+      "choices": [
+        "{Local.Var01}",
+        "{Upper(Local.Var01)}",
+        "{Upper(Var01)}"
+      ],
+      "answer": "{Upper(Local.Var01)}"
+    }
+  ],
+  "49": [
+    {
+      "label": "Authentication method",
+      "choices": [
+        "A personal access token (PAT)",
+        "A user-assigned managed identity",
+        "An Azure Login action that uses OpenID Connect (OIDC)"
+      ],
+      "answer": "An Azure Login action that uses OpenID Connect (OIDC)"
+    },
+    {
+      "label": "If the evaluation results are NOT met, configure the workflow to",
+      "choices": [
+        "Lock the target branch",
+        "Send an alert",
+        "Fail"
+      ],
+      "answer": "Fail"
+    }
+  ],
+  "53": [
+    {
+      "label": "credential =",
+      "choices": [
+        "AzureKeyCredential",
+        "ClientSecretCredential",
+        "DefaultAzureCredential"
+      ],
+      "answer": "DefaultAzureCredential"
+    },
+    {
+      "label": "openai_client.responses.",
+      "choices": [
+        "compact",
+        "create",
+        "retrieve"
+      ],
+      "answer": "create"
+    }
+  ],
+  "59": [
+    {
+      "label": "Authentication",
+      "choices": [
+        "Storage account access keys",
+        "Shared Access Signature (SAS)",
+        "System-assigned managed identity",
+        "User-assigned managed identity"
+      ],
+      "answer": "System-assigned managed identity"
+    },
+    {
+      "label": "Azure RBAC role",
+      "choices": [
+        "Storage Blob Data Reader",
+        "Storage Blob Data Contributor",
+        "Storage Queue Data Contributor",
+        "Owner"
+      ],
+      "answer": "Storage Blob Data Reader"
+    }
+  ],
+  "63": [
+    {
+      "label": "Guardrails",
+      "choices": [
+        "Select Tool call and set Action to Block.",
+        "Select User input and Output and set Action to Annotate.",
+        "Select User input and Tool response and set Action to Annotate.",
+        "Select User input, Output, Tool response, and Tool call and set Action to Block."
+      ],
+      "answer": "Select User input, Output, Tool response, and Tool call and set Action to Block."
+    },
+    {
+      "label": "Storage access",
+      "choices": [
+        "Storage account access keys",
+        "A user-assigned identity that is assigned the Storage Queue Data Contributor role",
+        "A system-assigned managed identity that is assigned the Storage Blob Data Reader role",
+        "A system-assigned managed identity that is assigned the Storage Blob Data Contributor role"
+      ],
+      "answer": "A system-assigned managed identity that is assigned the Storage Blob Data Reader role"
+    }
+  ],
+  "69": [
+    {
+      "label": "Evaluation metric",
+      "choices": [
+        "Coherence",
+        "Fluency",
+        "Groundedness",
+        "Similarity"
+      ],
+      "answer": "Groundedness"
+    },
+    {
+      "label": "Recommended configuration",
+      "choices": [
+        "Increase the model temperature.",
+        "Reject responses that do not meet the groundedness threshold.",
+        "Increase the maximum completion tokens.",
+        "Fine-tune the model by using the retrieved documents."
+      ],
+      "answer": "Reject responses that do not meet the groundedness threshold."
+    }
+  ],
+  "73": [
+    {
+      "label": "To retain attorney preferences across conversations, use",
+      "choices": [
+        "Agent memory that uses persistent storage",
+        "Conversation history",
+        "Orchestration-managed session context",
+        "Prompt cache"
+      ],
+      "answer": "Agent memory that uses persistent storage"
+    },
+    {
+      "label": "To retrieve uploaded documents, use",
+      "choices": [
+        "File search tool",
+        "Code interpreter tool",
+        "Computer use tool",
+        "Azure AI Translator"
+      ],
+      "answer": "File search tool"
+    }
+  ],
+  "79": [
+    {
+      "label": "To analyze uploaded spreadsheets, use",
+      "choices": [
+        "Code Interpreter Tool",
+        "File Search Tool",
+        "Computer Use Tool",
+        "Azure AI Search Tool"
+      ],
+      "answer": "Code Interpreter Tool"
+    },
+    {
+      "label": "To retrieve current weather information, use",
+      "choices": [
+        "Grounding with Bing Search",
+        "File Search Tool",
+        "Computer Use Tool",
+        "Microsoft Fabric tool"
+      ],
+      "answer": "Grounding with Bing Search"
+    }
+  ],
+  "83": [
+    {
+      "label": "To answer questions from uploaded contracts, use",
+      "choices": [
+        "File Search Tool",
+        "Code Interpreter Tool",
+        "Grounding with Bing Search",
+        "Computer Use Tool"
+      ],
+      "answer": "File Search Tool"
+    },
+    {
+      "label": "To generate charts from Excel workbooks, use",
+      "choices": [
+        "Code Interpreter Tool",
+        "File Search Tool",
+        "Azure AI Search Tool",
+        "Microsoft Fabric Tool"
+      ],
+      "answer": "Code Interpreter Tool"
+    }
+  ],
+  "89": [
+    {
+      "label": "Authentication method",
+      "choices": [
+        "Azure Login action that uses OpenID Connect (OIDC)",
+        "Personal access token (PAT)",
+        "Storage account access key",
+        "Publish Profile"
+      ],
+      "answer": "Azure Login action that uses OpenID Connect (OIDC)"
+    },
+    {
+      "label": "Credential management",
+      "choices": [
+        "Store credentials as GitHub repository secrets",
+        "Configure workload identity federation",
+        "Rotate PAT every 30 days",
+        "Use a shared administrator account"
+      ],
+      "answer": "Configure workload identity federation"
+    }
+  ],
+  "93": [
+    {
+      "label": "temperature=",
+      "choices": [
+        "0",
+        "1",
+        "2"
+      ],
+      "answer": "0"
+    },
+    {
+      "label": "output_config={\"effort\": ...}",
+      "choices": [
+        "\"high\"",
+        "\"low\"",
+        "\"medium\""
+      ],
+      "answer": "\"high\""
+    }
+  ],
+  "103": [
+    {
+      "label": "To measure whether the responses are supported by the provided context and address the user query",
+      "choices": [
+        "Coherence and Fluency",
+        "GPT similarity and F1 score",
+        "Groundedness and Relevance",
+        "Groundedness and ROUGE score"
+      ],
+      "answer": "Groundedness and Relevance"
+    },
+    {
+      "label": "To measure whether responses contain sensitive or proprietary information",
+      "choices": [
+        "Hateful and unfair content",
+        "Indirect attack",
+        "Protected material",
+        "Violent content"
+      ],
+      "answer": "Protected material"
+    }
+  ],
+  "105": [
+    {
+      "label": "Field value type",
+      "choices": [
+        "classify",
+        "generate",
+        "group",
+        "string",
+        "table"
+      ],
+      "answer": "string"
+    },
+    {
+      "label": "Field method",
+      "choices": [
+        "classify",
+        "generate",
+        "group",
+        "string",
+        "table"
+      ],
+      "answer": "generate"
+    }
+  ],
+  "107": [
+    {
+      "label": "Changing the content filtering configuration to low severity will resolve the fine-tuning job issues.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No"
+    },
+    {
+      "label": "The difference between the 12% and 4% content harm defect rate is consistent with the different severity thresholds used in Run1 and Run2.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes"
+    },
+    {
+      "label": "The identical 6% protected material evaluation values across Run1 and Run2 indicate that this metric is unaffected by the change in the severity threshold.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes"
+    }
+  ],
+  "109": [
+    {
+      "label": "Orchestration pattern",
+      "choices": [
+        "The sequential template that passes outputs node by-node",
+        "The group chat template to dynamically route control between the agents",
+        "The human-in-the-loop template that pauses execution of the workflow for input"
+      ],
+      "answer": "The sequential template that passes outputs node by-node"
+    },
+    {
+      "label": "Approval checkpoints",
+      "choices": [
+        "Add a Basic chat node.",
+        "Add a Condition statement.",
+        "Add an Ask a question node."
+      ],
+      "answer": "Add an Ask a question node."
+    }
+  ],
+  "113": [
+    {
+      "label": "Managed identity scope",
+      "choices": [
+        "Enable a system-assigned managed identity at the Foundry level.",
+        "Enable a system-assigned managed identity at the project level.",
+        "Create a service principal and store the principal's client secret."
+      ],
+      "answer": "Enable a system-assigned managed identity at the project level."
+    },
+    {
+      "label": "Key Vault authorization method",
+      "choices": [
+        "Add an API key to application settings.",
+        "Add a Key Vault access policy for the secrets.",
+        "Assign the Key Vault Secrets User role to the managed identity."
+      ],
+      "answer": "Assign the Key Vault Secrets User role to the managed identity."
+    }
+  ],
+  "115": [
+    {
+      "label": "Capture all the nested operations across the entire agent run",
+      "choices": [
+        "Hierarchical spans",
+        "A KQL query filter",
+        "Sampling",
+        "Tool call attributes",
+        "Trace sampling policy"
+      ],
+      "answer": "Hierarchical spans"
+    },
+    {
+      "label": "Record tool invocation arguments and results",
+      "choices": [
+        "Hierarchical spans",
+        "A KQL query filter",
+        "Sampling",
+        "Tool call attributes",
+        "Trace sampling policy"
+      ],
+      "answer": "Tool call attributes"
+    }
+  ],
+  "117": [
+    {
+      "label": "The code will display the name of each detected brand with a confidence equal to or higher than 75 percent.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes"
+    },
+    {
+      "label": "The code will display coordinates for the top-left corner of the rectangle that contains the brand logo of the displayed brands.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes"
+    },
+    {
+      "label": "The code will display coordinates for the bottom-right corner of the rectangle that contains the brand logo of the displayed brands.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No"
+    }
+  ],
+  "119": [
+    {
+      "label": "category:",
+      "choices": [
+        "'AzureAIService'",
+        "'AzureKeyVault'",
+        "'AzureOpenAI'"
+      ],
+      "answer": "'AzureKeyVault'"
+    },
+    {
+      "label": "authType:",
+      "choices": [
+        "'AccountKey'",
+        "'AccountManagedIdentity'",
+        "'ApiKey'"
+      ],
+      "answer": "'AccountManagedIdentity'"
+    }
+  ],
+  "123": [
+    {
+      "label": "Knowledge grounding",
+      "choices": [
+        "Configure retrieval from approved data sources.",
+        "Upload the policy documents directly to the agent.",
+        "Embed the policy documents directly into the agent instructions."
+      ],
+      "answer": "Configure retrieval from approved data sources."
+    },
+    {
+      "label": "Memory",
+      "choices": [
+        "Use orchestration-managed session context.",
+        "Enable agent memory that uses persistent storage.",
+        "Retain user preferences in the state of the client application."
+      ],
+      "answer": "Enable agent memory that uses persistent storage."
+    }
+  ],
+  "125": [
+    {
+      "label": "HTTP 429",
+      "choices": [
+        "Increase tenant-wide quotas.",
+        "Move large content to files and use file search.",
+        "Use additional agent tools to reduce the message size.",
+        "Implement exponential backoff and jitter in the retry logic.",
+        "Split content into smaller files before uploading the files."
+      ],
+      "answer": "Implement exponential backoff and jitter in the retry logic."
+    },
+    {
+      "label": "HTTP 400",
+      "choices": [
+        "Increase tenant-wide quotas.",
+        "Move large content to files and use file search.",
+        "Use additional agent tools to reduce the message size.",
+        "Implement exponential backoff and jitter in the retry logic.",
+        "Split content into smaller files before uploading the files."
+      ],
+      "answer": "Split content into smaller files before uploading the files."
+    }
+  ],
+  "127": [
+    {
+      "label": "For sample_text, audit will include entity records for Contact and SSN.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No"
+    },
+    {
+      "label": "For sample_text, text_for_model will include john.doe@contoso.com and 859-98-0987.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No"
+    },
+    {
+      "label": "For sample_text, text_for_model will contain entity type masks for John Doe and 312-555-1234.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes"
+    }
+  ],
+  "129": [
+    {
+      "label": "--kind",
+      "choices": [
+        "AI Services",
+        "LanguageAuthoring",
+        "OpenAI"
+      ],
+      "answer": "OpenAI"
+    },
+    {
+      "label": "Parameter before the JSON block",
+      "choices": [
+        "--api-properties",
+        "--assign-identity",
+        "--encryption"
+      ],
+      "answer": "--encryption"
+    }
+  ],
+  "133": [
+    {
+      "label": "request =",
+      "choices": [
+        "AnalyzeTextOptions(categories=comment)",
+        "AnalyzeTextOptions(text=[comment])",
+        "AnalyzeTextOptions(text=comment)",
+        "TextCategory.SELF_HARM(comment)"
+      ],
+      "answer": "AnalyzeTextOptions(text=comment)"
+    },
+    {
+      "label": "response =",
+      "choices": [
+        "client.analyze_image(request)",
+        "client.analyze_text(request)",
+        "client.moderate_text(request)",
+        "client.path(\"/text:analyze\").post(request)"
+      ],
+      "answer": "client.analyze_text(request)"
+    }
+  ],
+  "135": [
+    {
+      "label": "Step 1",
+      "choices": [
+        "Initialize the training dataset.",
+        "Train the classifier model.",
+        "Create a project.",
+        "Upload and tag images.",
+        "Train the object detection model."
+      ],
+      "answer": "Create a project."
+    },
+    {
+      "label": "Step 2",
+      "choices": [
+        "Initialize the training dataset.",
+        "Train the classifier model.",
+        "Create a project.",
+        "Upload and tag images.",
+        "Train the object detection model."
+      ],
+      "answer": "Upload and tag images."
+    },
+    {
+      "label": "Step 3",
+      "choices": [
+        "Initialize the training dataset.",
+        "Train the classifier model.",
+        "Create a project.",
+        "Upload and tag images.",
+        "Train the object detection model."
+      ],
+      "answer": "Train the classifier model."
+    }
+  ],
+  "139": [
+    {
+      "label": "HTTP method",
+      "choices": [
+        "PATCH",
+        "POST",
+        "PUT"
+      ],
+      "answer": "PUT"
+    },
+    {
+      "label": "\"kind\"",
+      "choices": [
+        "CognitiveServices",
+        "ComputerVision",
+        "TextAnalytics"
+      ],
+      "answer": "CognitiveServices"
+    }
+  ],
+  "141": [
+    {
+      "label": "JSON data",
+      "choices": [
+        "File projection",
+        "Object projection",
+        "Table projection"
+      ],
+      "answer": "Object projection"
+    },
+    {
+      "label": "Extracted text data",
+      "choices": [
+        "File projection",
+        "Object projection",
+        "Table projection"
+      ],
+      "answer": "Table projection"
+    }
+  ],
+  "143": [
+    {
+      "label": "The percentage of false positives is",
+      "choices": [
+        "0",
+        "25",
+        "30",
+        "50",
+        "100"
+      ],
+      "answer": "0"
+    },
+    {
+      "label": "The value for the number of true positives divided by the total number of true positives and false negatives is",
+      "choices": [
+        "0",
+        "25",
+        "30",
+        "50",
+        "100"
+      ],
+      "answer": "25"
+    }
+  ],
+  "145": [
+    {
+      "label": "Step 1",
+      "choices": [
+        "Regenerate the primary admin key",
+        "Regenerate the secondary admin key",
+        "Change the app to use the secondary admin key",
+        "Add a new query key",
+        "Change the app to use the new key",
+        "Delete the compromised key"
+      ],
+      "answer": "Add a new query key"
+    },
+    {
+      "label": "Step 2",
+      "choices": [
+        "Regenerate the primary admin key",
+        "Regenerate the secondary admin key",
+        "Change the app to use the secondary admin key",
+        "Add a new query key",
+        "Change the app to use the new key",
+        "Delete the compromised key"
+      ],
+      "answer": "Change the app to use the new key"
+    },
+    {
+      "label": "Step 3",
+      "choices": [
+        "Regenerate the primary admin key",
+        "Regenerate the secondary admin key",
+        "Change the app to use the secondary admin key",
+        "Add a new query key",
+        "Change the app to use the new key",
+        "Delete the compromised key"
+      ],
+      "answer": "Delete the compromised key"
+    }
+  ],
+  "148": [
+    {
+      "label": "Project Types",
+      "choices": [
+        "Classification",
+        "Object Detection"
+      ],
+      "answer": "Classification"
+    },
+    {
+      "label": "Classification Types",
+      "choices": [
+        "Multiclass (Single tag per image)",
+        "Multilabel (Multiple tags per image)"
+      ],
+      "answer": "Multiclass (Single tag per image)"
+    },
+    {
+      "label": "Domains",
+      "choices": [
+        "Adult",
+        "Food",
+        "General",
+        "General (compact)",
+        "Landmarks",
+        "Landmarks (compact)",
+        "Retail",
+        "Retail (compact)"
+      ],
+      "answer": "General (compact)"
+    }
+  ],
+  "151": [
+    {
+      "label": "The code will detect the language of documents.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No"
+    },
+    {
+      "label": "The url attribute returned for each linked entity will be a Bing search link.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No"
+    },
+    {
+      "label": "The matches attribute returned for each linked entity will provide the location in a document where the entity is referenced.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes"
+    }
+  ],
+  "152": [
+    {
+      "label": "Model evaluation",
+      "choices": [
+        "Configure private endpoint access.",
+        "Use deployment lists and license tabs.",
+        "Use tool catalog connections and run traces.",
+        "Use model catalog leaderboards and model cards."
+      ],
+      "answer": "Use model catalog leaderboards and model cards."
+    },
+    {
+      "label": "Deployment option",
+      "choices": [
+        "Bring your own model.",
+        "Build a vector index.",
+        "Use a serverless deployment.",
+        "Use a managed compute deployment."
+      ],
+      "answer": "Use a serverless deployment."
+    }
+  ],
+  "154": [
+    {
+      "label": "The response will contain an explanation of large language models (LLMs) that has a high degree of certainty.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No"
+    },
+    {
+      "label": "Changing “what is an LLM?” to “What is an LLM in the context of AI models?” will produce the intended response.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No"
+    },
+    {
+      "label": "Changing “You are a helpful assistant.” to “You must answer only within the context of AI language models.” will give a higher likelihood of producing the intended response.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes"
+    }
+  ],
+  "158": [
+    {
+      "label": "Extract text",
+      "choices": [
+        "Azure AI Search",
+        "Azure Vision in Foundry Tools",
+        "Azure Document Intelligence in Foundry Tools"
+      ],
+      "answer": "Azure Document Intelligence in Foundry Tools"
+    },
+    {
+      "label": "Perform sentiment analysis",
+      "choices": [
+        "Azure AI Search",
+        "Azure AI Computer Vision",
+        "Azure Document Intelligence in Foundry Tools",
+        "Azure Language in Foundry Tools"
+      ],
+      "answer": "Azure Language in Foundry Tools"
+    }
+  ],
+  "160": [
+    {
+      "label": "Going to http://localhost:5000/status will query the Azure endpoint to verify whether the API key used to start the container is valid.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No"
+    },
+    {
+      "label": "The container logging provider will write log data.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No"
+    },
+    {
+      "label": "Going to http://localhost:5000/swagger will provide the details to access the documentation for the available endpoints.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes"
+    }
+  ],
+  "163": [
+    {
+      "label": "Step 1",
+      "choices": [
+        "Pull an image from Docker Hub.",
+        "Run the container and specify an API key and the Endpoint URL of the Azure AI resource.",
+        "Provision an on-premises Kubernetes cluster that is isolated from the internet.",
+        "Provision an on-premises Kubernetes cluster that has internet connectivity.",
+        "Provision an Azure Kubernetes Service (AKS) resource.",
+        "Run the container and specify an App ID and Client Secret.",
+        "Pull an image from the Microsoft Container Registry (MCR)."
+      ],
+      "answer": "Provision an on-premises Kubernetes cluster that has internet connectivity."
+    },
+    {
+      "label": "Step 2",
+      "choices": [
+        "Pull an image from Docker Hub.",
+        "Run the container and specify an API key and the Endpoint URL of the Azure AI resource.",
+        "Provision an on-premises Kubernetes cluster that is isolated from the internet.",
+        "Provision an on-premises Kubernetes cluster that has internet connectivity.",
+        "Provision an Azure Kubernetes Service (AKS) resource.",
+        "Run the container and specify an App ID and Client Secret.",
+        "Pull an image from the Microsoft Container Registry (MCR)."
+      ],
+      "answer": "Pull an image from the Microsoft Container Registry (MCR)."
+    },
+    {
+      "label": "Step 3",
+      "choices": [
+        "Pull an image from Docker Hub.",
+        "Run the container and specify an API key and the Endpoint URL of the Azure AI resource.",
+        "Provision an on-premises Kubernetes cluster that is isolated from the internet.",
+        "Provision an on-premises Kubernetes cluster that has internet connectivity.",
+        "Provision an Azure Kubernetes Service (AKS) resource.",
+        "Run the container and specify an App ID and Client Secret.",
+        "Pull an image from the Microsoft Container Registry (MCR)."
+      ],
+      "answer": "Run the container and specify an API key and the Endpoint URL of the Azure AI resource."
+    }
+  ],
+  "164": [
+    {
+      "label": "HTTP method",
+      "choices": [
+        "GET",
+        "PATCH",
+        "POST"
+      ],
+      "answer": "POST"
+    },
+    {
+      "label": "visualFeatures",
+      "choices": [
+        "description",
+        "imageType",
+        "objects",
+        "tags"
+      ],
+      "answer": "imageType"
+    }
+  ],
+  "166": [
+    {
+      "label": "Deployment type",
+      "choices": [
+        "Standard",
+        "Global Standard",
+        "Global Provisioned"
+      ],
+      "answer": "Standard"
+    },
+    {
+      "label": "Version update policy",
+      "choices": [
+        "Once the current version expires",
+        "Opt out of automatic model version upgrades",
+        "Upgrade once a new default version becomes available"
+      ],
+      "answer": "Opt out of automatic model version upgrades"
+    }
+  ],
+  "173": [
+    {
+      "label": "First client.videos method",
+      "choices": [
+        "create",
+        "download_content",
+        "list",
+        "retrieve"
+      ],
+      "answer": "create"
+    },
+    {
+      "label": "Second client.videos method",
+      "choices": [
+        "create",
+        "download_content",
+        "list",
+        "retrieve"
+      ],
+      "answer": "retrieve"
+    }
+  ],
+  "175": [
+    {
+      "label": "credential",
+      "choices": [
+        "AzureKeyCredential()",
+        "DefaultAzureCredential()",
+        "None"
+      ],
+      "answer": "DefaultAzureCredential()"
+    },
+    {
+      "label": "project_client.agents method",
+      "choices": [
+        "create_version",
+        "get",
+        "get_version"
+      ],
+      "answer": "get"
+    }
+  ]
+}
