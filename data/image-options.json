@@ -1051,7 +1051,112 @@
       "answer": "imageType"
     }
   ],
-  "166": [
+  "174": [
+    {
+      "label": "Container image",
+      "choices": [
+        "http://contoso.blob.core.windows.net",
+        "https://contoso.cognitiveservices.azure.com",
+        "mcr.microsoft.com/azure-cognitive-services/textanalytics/keyphrase",
+        "mcr.microsoft.com/azure-cognitive-services/textanalytics/sentiment"
+      ],
+      "answer": "mcr.microsoft.com/azure-cognitive-services/textanalytics/sentiment"
+    },
+    {
+      "label": "Billing=",
+      "choices": [
+        "http://contoso.blob.core.windows.net",
+        "https://contoso.cognitiveservices.azure.com",
+        "mcr.microsoft.com/azure-cognitive-services/textanalytics/keyphrase",
+        "mcr.microsoft.com/azure-cognitive-services/textanalytics/sentiment"
+      ],
+      "answer": "https://contoso.cognitiveservices.azure.com"
+    }
+  ],
+  "180": [
+    {
+      "label": "Provide access to AI1 by using",
+      "choices": [
+        "An API key",
+        "A bearer token",
+        "A shared access signature (SAS) token"
+      ],
+      "answer": "An API key"
+    },
+    {
+      "label": "Connect to the deployment by using",
+      "choices": [
+        "An API key",
+        "A deployment endpoint",
+        "A deployment name",
+        "A deployment type"
+      ],
+      "answer": "A deployment name"
+    }
+  ],
+  "181": [
+    {
+      "label": "approval step  type:",
+      "choices": [
+        "ask_question",
+        "basic_chat",
+        "data_transformation"
+      ],
+      "answer": "ask_question"
+    },
+    {
+      "label": "execute_refund  condition:",
+      "choices": [
+        "approval == \"approved\"",
+        "propose_refund.output != null",
+        "true"
+      ],
+      "answer": "approval == \"approved\""
+    }
+  ],
+  "182": [
+    {
+      "label": "To prevent access from the internet",
+      "choices": [
+        "Configure an IP firewall.",
+        "Create a private endpoint.",
+        "Use Azure roles."
+      ],
+      "answer": "Create a private endpoint."
+    },
+    {
+      "label": "To limit access to query specific indexes",
+      "choices": [
+        "Create a private endpoint.",
+        "Use Azure roles.",
+        "Use key authentication."
+      ],
+      "answer": "Use Azure roles."
+    }
+  ],
+  "185": [
+    {
+      "label": "Extract the text",
+      "choices": [
+        "Azure Document Intelligence in Foundry Tools",
+        "Azure Language in Foundry Tools",
+        "Azure AI Search",
+        "Azure Vision in Foundry Tools"
+      ],
+      "answer": "Azure Vision in Foundry Tools"
+    },
+    {
+      "label": "Identify well-known locations",
+      "choices": [
+        "Azure Document Intelligence in Foundry Tools",
+        "Azure Language in Foundry Tools",
+        "Azure AI Search",
+        "Azure Vision in Foundry Tools"
+      ],
+      "answer": "Azure Language in Foundry Tools"
+    }
+  ],
+  "186": [
     {
       "label": "Deployment type",
       "choices": [
@@ -1071,7 +1176,7 @@
       "answer": "Opt out of automatic model version upgrades"
     }
   ],
-  "173": [
+  "193": [
     {
       "label": "First client.videos method",
       "choices": [
@@ -1093,7 +1198,7 @@
       "answer": "retrieve"
     }
   ],
-  "175": [
+  "196": [
     {
       "label": "credential",
       "choices": [
@@ -1111,6 +1216,196 @@
         "get_version"
       ],
       "answer": "get"
+    }
+  ],
+  "201": [
+    {
+      "label": "request =",
+      "choices": [
+        "AddOrUpdateTextBlocklistItemsOptions",
+        "AnalyzeImageOptions",
+        "AnalyzeTextOptions",
+        "TextBlocklist"
+      ],
+      "answer": "AnalyzeTextOptions"
+    },
+    {
+      "label": "analysis_result =",
+      "choices": [
+        "client.add_or_update_blocklist_items",
+        "client.analyze_image",
+        "client.analyze_text",
+        "client.list_text_blocklists"
+      ],
+      "answer": "client.analyze_text"
+    }
+  ],
+  "205": [
+    {
+      "label": "The schema requires that a receipt has a discount_code value.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No"
+    },
+    {
+      "label": "The schema can be used as is for Azure OpenAI structured outputs.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes"
+    },
+    {
+      "label": "The generated JSON object will preserve the schema property order of merchant, order_number, discount_code, line_items, and total.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes"
+    }
+  ],
+  "209": [
+    {
+      "label": "The code will perform face recognition.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No"
+    },
+    {
+      "label": "The code will list tags and their associated confidence.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes"
+    },
+    {
+      "label": "The code will read an image file from the local file system.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes"
+    }
+  ],
+  "210": [
+    {
+      "label": "Task",
+      "choices": [
+        "\"kind\": \"EntityRecognition\"",
+        "\"kind\": \"LanguageDetection\"",
+        "\"kind\": \"PiiEntityRecognition\""
+      ],
+      "answer": "\"kind\": \"PiiEntityRecognition\""
+    },
+    {
+      "label": "parameters",
+      "choices": [
+        "\"piiCategories\": [\"Organization\"]",
+        "\"piiCategories\": [\"Person\"]",
+        "\"piiCategories\": [\"PhoneNumber\"]"
+      ],
+      "answer": "\"piiCategories\": [\"Person\"]"
+    }
+  ],
+  "212": [
+    {
+      "label": "curl https://cu1.services.ai.azure.com/ …",
+      "choices": [
+        "assistants",
+        "completions",
+        "embeddings",
+        "threads"
+      ],
+      "answer": "assistants"
+    },
+    {
+      "label": "Function declaration",
+      "choices": [
+        "content=[{",
+        "functions=[{",
+        "tool_resources=[{",
+        "tools=[{"
+      ],
+      "answer": "tools=[{"
+    }
+  ],
+  "218": [
+    {
+      "label": "https://management.azure.com/ … /resourceGroups/OCRProject/providers/",
+      "choices": [
+        "subscriptions/3edfe572-cb54-3ced-ae12-c5c177f39a12",
+        "subscriptions/8d3591aa-96b8-4737-ad09-00f9b1ed35ad",
+        "tenant/3edfe572-cb54-3ced-ae12-c5c177f39a12",
+        "tenant/8d3591aa-96b8-4737-ad09-00f9b1ed35ad"
+      ],
+      "answer": "subscriptions/8d3591aa-96b8-4737-ad09-00f9b1ed35ad"
+    },
+    {
+      "label": "… /accounts/CS1?api-version=2021-10-01",
+      "choices": [
+        "Microsoft.ApiManagement",
+        "Microsoft.CognitiveServices",
+        "Microsoft.ContainerService",
+        "Microsoft.KeyVault"
+      ],
+      "answer": "Microsoft.CognitiveServices"
+    }
+  ],
+  "225": [
+    {
+      "label": "request_a returns a vectorized response.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes"
+    },
+    {
+      "label": "request_b returns a JSON-formatted response.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes"
+    },
+    {
+      "label": "request_b always returns a case summary that includes risks.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No"
+    }
+  ],
+  "226": [
+    {
+      "label": "You hear three sentences in different voices.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "Yes"
+    },
+    {
+      "label": "You hear three sentences in different accents.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No"
+    },
+    {
+      "label": "You hear three sentences expressed in a neutral tone.",
+      "choices": [
+        "Yes",
+        "No"
+      ],
+      "answer": "No"
     }
   ]
 }

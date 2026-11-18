@@ -1,4 +1,4 @@
-﻿const fs = require('fs');
+const fs = require('fs');
 const vm = require('vm');
 const assert = require('assert/strict');
 
@@ -10,8 +10,9 @@ const guide = box.window.AI103_TUTORIAL;
 const G = box.window.AI103_GRADING;
 const modules = new Set(guide.map(m => m.id));
 
-assert.equal(bank.length, 175);
-assert.equal(new Set(bank.map(q => q.id)).size, 175);
+assert.equal(bank.length, 226);
+assert.equal(new Set(bank.map(q => q.id)).size, 226);
+const inCase = id => id >= 186 && id <= 196; // Contoso case study block in Final Updated.pdf
 for (const [index, q] of bank.entries()) {
   assert.equal(q.id, index + 1, 'Question numbering gap');
   assert.ok(q.question && q.sourceAnswer && q.explanation, `Q${q.id} missing content`);
@@ -35,23 +36,32 @@ for (const [index, q] of bank.entries()) {
     assert.ok(path.startsWith(`assets/questions/q${q.id}-`), `Misassigned ${path}`);
   }
   assert.ok(q.sourceImages.every(path => !q.answerImages.includes(path)), `Q${q.id} reveals answer image`);
-  assert.equal(Boolean(q.caseStudy), q.id >= 166, `Q${q.id} case study association`);
-  if (q.id < 166) assert.ok(!q.explanation.includes('Case Study'), `Q${q.id} swallowed case study`);
+  assert.equal(Boolean(q.caseStudy), inCase(q.id), `Q${q.id} case study association`);
+  assert.ok(!/Case Study/.test(q.explanation + q.sourceAnswer), `Q${q.id} swallowed case study text`);
+  assert.ok(!/Note: This question is part of a series/.test(q.explanation), `Q${q.id} carries the next question's series note`);
   // Every question must be answerable: feeding the expected answer back must grade as correct.
   const expected = G.kind(q) === 'fields' ? q.answerFields.map(f => f.answer)
     : G.kind(q) === 'pairs' ? q.matchingPairs.map(p => p.value) : q.correctAnswer;
   assert.equal(G.isCorrect(q, expected), true, `Q${q.id} cannot be answered correctly`);
   assert.equal(G.isCorrect(q, []), false, `Q${q.id} blank answer graded correct`);
 }
-for (const id of [3, 148, 151, 152, 154, 158, 160, 163, 164, 166, 173, 175]) {
+for (const id of [3, 148, 151, 152, 154, 158, 160, 163, 164, 186, 193, 196, 174, 180, 181, 182, 185, 201, 205, 209, 210, 212, 218, 225, 226]) {
   assert.ok(bank[id - 1].answerFields.length, `Q${id} missing interactive image choices`);
   assert.ok(bank[id - 1].sourceImages.length && bank[id - 1].answerImages.length, `Q${id} missing exhibits`);
 }
 for (const id of [151, 154, 160]) assert.equal(bank[id - 1].sourceImages.length, 2, `Q${id} must show code and statements`);
-for (const [id, answer] of [[80, 'C'], [108, 'C'], [155, 'C'], [157, 'A,C'], [165, 'C,E'], [171, 'A,C']]) {
-  assert.equal(bank[id - 1].correctAnswer.join(','), answer, `Q${id} incorrect answer import`);
+for (const [id, answer] of [[80, 'C'], [108, 'C'], [155, 'C'], [157, 'A,C'], [165, 'C,E'], [191, 'A,C'], [166, 'B'], [172, 'A'], [199, 'A,D'], [208, 'D,E'], [216, 'B,C'], [224, 'A']]) {
+  assert.equal([...bank[id - 1].correctAnswer].sort().join(','), answer, `Q${id} incorrect answer import`);
 }
-assert.ok(bank[126].answerImages.includes('assets/questions/q127-p132-b749788c.png'), 'Q127 completed answer area must stay hidden until reveal');
+for (const [id, digest] of [[127, 'b749788c'], [218, '8f138174']]) {
+  assert.ok(bank[id - 1].answerImages.some(p => p.endsWith(`-${digest}.png`)), `Q${id} completed answer area must stay hidden until reveal`);
+  assert.ok(!bank[id - 1].sourceImages.some(p => p.endsWith(`-${digest}.png`)), `Q${id} shows its answer before reveal`);
+}
+// New drag-and-drop items transcribed from the Final Updated.pdf exhibits.
+for (const [id, n] of [[167, 2], [175, 3], [177, 2], [179, 5], [206, 3]]) {
+  assert.equal(G.kind(bank[id - 1]), 'pairs', `Q${id} must be drag-and-drop`);
+  assert.equal(bank[id - 1].matchingPairs.length, n, `Q${id} target count`);
+}
 
 // Grading edge cases: blank, partial, reversed, quoted and correct answers.
 const q3 = bank[2];

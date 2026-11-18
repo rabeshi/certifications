@@ -1,0 +1,122 @@
+{
+  "_note": "Drag-and-drop targets transcribed from the PDF exhibits; keys are question numbers.",
+  "167": {
+    "candidates": [
+      "\"session\"",
+      "\"{{ConversationId}}\"",
+      "\"{{UserId}}\"",
+      "[mem_store_name]",
+      "[memory_tool]",
+      "MemorySearchTool(\"support_mem_store\")"
+    ],
+    "pairs": [
+      {
+        "target": "MemorySearchTool(… scope=",
+        "value": "\"{{UserId}}\""
+      },
+      {
+        "target": "PromptAgentDefinition(… tools=",
+        "value": "[memory_tool]"
+      }
+    ]
+  },
+  "175": {
+    "candidates": [
+      "Request approval to run the container.",
+      "Export model1 to Host1.",
+      "Configure disk logging.",
+      "Run the container.",
+      "Retrain the model."
+    ],
+    "pairs": [
+      {
+        "target": "Step 1",
+        "value": "Request approval to run the container."
+      },
+      {
+        "target": "Step 2",
+        "value": "Export model1 to Host1."
+      },
+      {
+        "target": "Step 3",
+        "value": "Run the container."
+      }
+    ]
+  },
+  "177": {
+    "candidates": [
+      "Food",
+      "General",
+      "General (compact)",
+      "Image classification",
+      "Logo",
+      "Object detection"
+    ],
+    "pairs": [
+      {
+        "target": "Project type",
+        "value": "Object detection"
+      },
+      {
+        "target": "Domain",
+        "value": "General (compact)"
+      }
+    ]
+  },
+  "179": {
+    "candidates": [
+      "From the Custom Vision portal, open the project.",
+      "From the Azure Machine Learning studio, open the workspace.",
+      "From Vision Studio, open the project.",
+      "Upload sample images of the new products.",
+      "Label the sample images.",
+      "Retrain the model.",
+      "Publish the model."
+    ],
+    "pairs": [
+      {
+        "target": "Step 1",
+        "value": "From the Custom Vision portal, open the project."
+      },
+      {
+        "target": "Step 2",
+        "value": "Upload sample images of the new products."
+      },
+      {
+        "target": "Step 3",
+        "value": "Label the sample images."
+      },
+      {
+        "target": "Step 4",
+        "value": "Retrain the model."
+      },
+      {
+        "target": "Step 5",
+        "value": "Publish the model."
+      }
+    ]
+  },
+  "206": {
+    "candidates": [
+      "Export the model.",
+      "Change the classification type.",
+      "Create a new classification model.",
+      "Change Domains to General (compact).",
+      "Retrain the model."
+    ],
+    "pairs": [
+      {
+        "target": "Step 1",
+        "value": "Change Domains to General (compact)."
+      },
+      {
+        "target": "Step 2",
+        "value": "Retrain the model."
+      },
+      {
+        "target": "Step 3",
+        "value": "Export the model."
+      }
+    ]
+  }
+}
