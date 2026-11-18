@@ -199,6 +199,16 @@ select { font: inherit; color: var(--ink); background: var(--surface); border: 1
 .flow li span:not(.step-n) { color: var(--muted); }
 .flow li:not(:last-child)::after { content: '→'; position: absolute; right: -21px; top: 50%; transform: translateY(-50%); color: var(--brand); font-weight: 800; font-size: 1.1rem; }
 .step-n { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 99px; background: var(--brand); color: var(--brand-ink); font-weight: 800; font-size: .72rem; }
+.example { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--violet); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+.example .eyebrow { color: var(--violet); margin-bottom: 4px; }
+.example h2 { margin-bottom: 6px; }
+.ex-setting { color: var(--ink-2); }
+.ex-rows { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 8px; counter-reset: ex; }
+.ex-rows li { display: grid; grid-template-columns: 1.1fr 1.1fr 1fr; gap: 16px; padding: 12px 14px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--line); font-size: .92rem; }
+.ex-rows li.ex-head { background: none; border: 0; padding: 0 14px; font-size: .74rem; text-transform: uppercase; letter-spacing: .07em; font-weight: 700; color: var(--muted); }
+.ex-rows small { display: none; }
+.ex-use { font-weight: 600; }
+.ex-why { color: var(--muted); }
 .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
 table { width: 100%; border-collapse: collapse; font-size: .93rem; }
 th, td { text-align: left; vertical-align: top; padding: 10px 14px; border-bottom: 1px solid var(--line); }
@@ -385,6 +395,10 @@ textarea { width: 100%; font: inherit; padding: 12px; border: 1px solid var(--li
   .sb-stat span { font-size: .62rem; letter-spacing: .03em; }
   .sb-progress { grid-column: 1 / -1; }
   .target { grid-template-columns: 1fr; }
+  .example { padding: 18px; }
+  .ex-rows li { grid-template-columns: 1fr; gap: 6px; }
+  .ex-rows li.ex-head { display: none; }
+  .ex-rows small { display: block; font-size: .68rem; text-transform: uppercase; letter-spacing: .07em; color: var(--violet); font-weight: 700; }
   .fields.yn .field { grid-template-columns: 1fr; }
   .flag { margin-left: 0; }
   .qactions .btn { flex: 1; }

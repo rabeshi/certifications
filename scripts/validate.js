@@ -4,7 +4,7 @@ const assert = require('assert/strict');
 
 const box = { window: {} };
 vm.createContext(box);
-for (const file of ['data/questions.js', 'data/tutorial.js', 'data/hints.js', 'js/grading.js']) vm.runInContext(fs.readFileSync(file, 'utf8'), box, { filename: file });
+for (const file of ['data/questions.js', 'data/tutorial.js', 'data/hints.js', 'data/examples.js', 'js/grading.js']) vm.runInContext(fs.readFileSync(file, 'utf8'), box, { filename: file });
 const bank = box.window.AI103_QUESTIONS;
 const guide = box.window.AI103_TUTORIAL;
 const G = box.window.AI103_GRADING;
@@ -76,7 +76,9 @@ assert.equal(guide[0].id, 'overview');
 for (const m of guide) {
   assert.ok(m.title && m.tagline && m.intro && m.services.length && m.points.length && m.tips.length, `Module ${m.id} incomplete`);
   for (const f of m.figures) assert.ok(fs.existsSync(f.src), `Module ${m.id} missing figure ${f.src}`);
+  const ex = box.window.AI103_EXAMPLES[m.id];
+  assert.ok(ex && ex.title && ex.setting && ex.rows.length >= 5 && ex.rows.every(r => r.length === 3 && r.every(Boolean)), `Module ${m.id} needs a real-world example`);
   if (m.id !== 'overview') assert.ok(bank.some(q => q.module === m.id), `Module ${m.id} has no practice questions`);
 }
 
-console.log(`PASS: ${bank.length} questions (${bank.filter(q => q.answerFields.length).length} answer-area, ${bank.filter(q => G.kind(q) === 'pairs').length} drag-drop, ${bank.filter(q => G.kind(q) === 'options').length} multiple-choice); every question answerable and hinted; ${guide.length} study-guide modules verified.`);
+console.log(`PASS: ${bank.length} questions (${bank.filter(q => q.answerFields.length).length} answer-area, ${bank.filter(q => G.kind(q) === 'pairs').length} drag-drop, ${bank.filter(q => G.kind(q) === 'options').length} multiple-choice); every question answerable and hinted; ${guide.length} study-guide modules with real-world examples verified.`);

@@ -5,6 +5,7 @@
   const GUIDE = window.AI103_TUTORIAL || [];
   const G = window.AI103_GRADING;
   const HINTS = window.AI103_HINTS || {};
+  const EXAMPLES = window.AI103_EXAMPLES || {};
   const KEY = 'ai103QuizLab.v3';
   const TARGET = 70; // practice pass target, %
   const byId = new Map(BANK.map(q => [q.id, q]));
@@ -227,6 +228,23 @@
       </div>`;
   }
 
+  function exampleHtml(ex) {
+    if (!ex) return '';
+    return `<section class="example" aria-labelledby="ex-title">
+      <p class="eyebrow">Real-world example</p>
+      <h2 id="ex-title">${esc(ex.title)}</h2>
+      <p class="ex-setting">${fmt(ex.setting)}</p>
+      <ol class="ex-rows">
+        <li class="ex-head" aria-hidden="true"><span>They need to…</span><span>So they use…</span><span>Because…</span></li>
+        ${ex.rows.map(([need, use, why]) => `<li>
+          <span class="ex-need"><small>Need</small>${fmt(need)}</span>
+          <span class="ex-use"><small>Use</small>${fmt(use)}</span>
+          <span class="ex-why"><small>Why</small>${fmt(why)}</span>
+        </li>`).join('')}
+      </ol>
+    </section>`;
+  }
+
   function guideModule(id) {
     const m = moduleById.get(id);
     if (!m) return go('#/guide');
@@ -245,6 +263,7 @@
         </header>
         <p class="intro">${fmt(m.intro)}</p>
         ${m.diagram ? `<figure class="flow"><figcaption>${esc(m.diagram.title)}</figcaption><ol>${m.diagram.steps.map((s, n) => `<li><span class="step-n">${n + 1}</span><b>${fmt(s.t)}</b><span>${fmt(s.d)}</span></li>`).join('')}</ol></figure>` : ''}
+        ${exampleHtml(EXAMPLES[m.id])}
         <section>
           <h2>Services at a glance</h2>
           <div class="table-wrap"><table class="svc"><thead><tr><th>Service / feature</th><th>Use it for</th></tr></thead><tbody>
