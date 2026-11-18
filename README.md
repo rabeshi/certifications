@@ -5,6 +5,8 @@ Static, dependency-free study app built from the bundled `Final Updated.pdf` (22
 ## What's in it
 
 - **Study guide** (`#/guide`): an overview plus 11 topic modules (Foundry deployment, security, generative AI, agents, AI Search/RAG, document processing, vision, language, speech, content safety, evaluation). Each module has a flow diagram, a "service → use it for" table, key points, exam clue words, screenshots/exhibits from the bank and a button that practises exactly that module's questions.
+- **Video lessons**: every study-guide module embeds a YouTube video (checked to exist and allow embedding) plus an alternative link (`data/videos.js`).
+- **Hands-on labs** (`#/labs`): five realistic Azure mini-projects (FixIt agent, DriveGuide RAG, PayFlow invoices, LineCheck Custom Vision, StudyBuddy safety) with scenario, architecture diagram, downloadable sample files, step-by-step code, checkpoints, exam links and per-step progress (`data/labs.js`, sample files in `assets/labs/`, regenerate with `python scripts/make_lab_assets.py`).
 - **Learning mode**: check each answer for instant right/wrong marking, the explanation, why the other options are wrong, and a link to the related study module.
 - **Exam mode**: 20 / 50 / all questions, optional 60 / 100 / 120-minute limit, question map, flagging, and a results page with a per-topic breakdown and review of missed answers.
 - **Score bar**: sticky under the header in both modes. Learning shows correct / incorrect / accuracy / streak; Exam shows answered / flagged / timer and a live score that is hidden by default (one click to show).

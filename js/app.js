@@ -6,6 +6,9 @@
   const G = window.AI103_GRADING;
   const HINTS = window.AI103_HINTS || {};
   const EXAMPLES = window.AI103_EXAMPLES || {};
+  const VIDEOS = window.AI103_VIDEOS || {};
+  const LABS = window.AI103_LABS || [];
+  const labById = new Map(LABS.map(l => [l.id, l]));
   const KEY = 'ai103QuizLab.v3';
   const TARGET = 70; // practice pass target, %
   const byId = new Map(BANK.map(q => [q.id, q]));
@@ -19,7 +22,7 @@
   // ---------- state ----------
   // Bump BANK_EDITION whenever a new PDF edition renumbers questions, and add the id mapping below.
   const BANK_EDITION = 2;
-  const blank = () => ({ edition: BANK_EDITION, completed: {}, flagged: {}, history: [], bestScore: 0, learn: null, exam: null, review: null, read: {}, prefs: { liveScore: false } });
+  const blank = () => ({ edition: BANK_EDITION, completed: {}, flagged: {}, history: [], bestScore: 0, learn: null, exam: null, review: null, read: {}, labs: {}, prefs: { liveScore: false } });
   // Edition 1 -> 2 (Final Updated.pdf): the Contoso case study moved from 166-175 to 186-196 (195 is new).
   const CASE_MOVE = { 166: 186, 167: 187, 168: 188, 169: 189, 170: 190, 171: 191, 172: 192, 173: 193, 174: 194, 175: 196 };
   const remapIds = (o, fn) => Object.fromEntries(Object.entries(o || {}).map(([id, v]) => [fn(Number(id)), v]));
@@ -50,6 +53,7 @@
     for (const m of ['learn', 'exam', 'review']) if (s[m] && (!s[m].mode || !Array.isArray(s[m].ids) || s[m].ids.some(id => !byId.has(id)))) s[m] = null;
     s.prefs = { ...blank().prefs, ...(s.prefs || {}) };
     s.read = s.read || {};
+    s.labs = s.labs && typeof s.labs === 'object' ? s.labs : {};
     return s;
   }
   function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch { /* ignore */ } }
@@ -98,6 +102,7 @@
     scorebar.hidden = true;
     window.scrollTo(0, 0);
     if (view === 'guide') return arg ? guideModule(arg) : guideIndex();
+    if (view === 'labs') return arg ? labPage(arg) : labsIndex();
     if (view === 'learn' && state.learn && state.learn.done && arg === 'summary') return learnSummary();
     if (view === 'learn' && state.learn && !state.learn.done) return renderQuestion('learn');
     if (view === 'exam' && state.exam && !state.exam.results) return renderQuestion('exam');
@@ -151,6 +156,7 @@
           <div class="row">
             <a class="btn" href="#/guide">Open the study guide</a>
             <a class="btn secondary" href="#/learn">Start practising</a>
+            <a class="btn secondary" href="#/labs">Hands-on labs</a>
           </div>
         </div>
         <div class="stat-grid">
@@ -274,8 +280,10 @@
           </div>
         </header>
         <p class="intro">${fmt(m.intro)}</p>
+        ${videoHtml(VIDEOS[m.id])}
         ${m.diagram ? `<figure class="flow"><figcaption>${esc(m.diagram.title)}</figcaption><ol>${m.diagram.steps.map((s, n) => `<li><span class="step-n">${n + 1}</span><b>${fmt(s.t)}</b><span>${fmt(s.d)}</span></li>`).join('')}</ol></figure>` : ''}
         ${exampleHtml(EXAMPLES[m.id])}
+        ${LABS.filter(l => l.modules.includes(m.id)).map(l => `<a class="lab-link" href="#/labs/${l.id}"><span class="badge sm">${esc(l.badge)}</span><span><small>Hands-on lab · ${esc(l.time)}</small>${esc(l.title)}</span><span aria-hidden="true">→</span></a>`).join('')}
         <section>
           <h2>Services at a glance</h2>
           <div class="table-wrap"><table class="svc"><thead><tr><th>Service / feature</th><th>Use it for</th></tr></thead><tbody>
@@ -309,6 +317,175 @@
       state.read[m.id] ? delete state.read[m.id] : (state.read[m.id] = true);
       save(); $('#mark-read').textContent = state.read[m.id] ? '✓ Marked as read' : 'Mark as read';
     };
+    $$('[data-try]').forEach(b => b.onclick = () => newSession('learn', [Number(b.dataset.try)], { label: 'Question ' + b.dataset.try }));
+    bindZoom();
+  }
+
+  // ---------- videos ----------
+  function videoHtml(v) {
+    if (!v) return '';
+    const watch = id => `https://www.youtube.com/watch?v=${encodeURIComponent(id)}`;
+    return `<section class="video-card" aria-labelledby="video-title">
+      <div class="video-head">
+        <p class="eyebrow">Watch the lesson</p>
+        <h2 id="video-title">${esc(v.main.title)}</h2>
+        <p class="muted">${esc(v.main.channel)} · ${esc(v.why)}</p>
+      </div>
+      <div class="video-frame">
+        <iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(v.main.id)}?rel=0" title="${esc(v.main.title)}" loading="lazy"
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <p class="video-foot">
+        <a href="${watch(v.main.id)}" target="_blank" rel="noopener">Open on YouTube ↗</a>
+        ${v.alt ? `<span>Another take: <a href="${watch(v.alt.id)}" target="_blank" rel="noopener">${esc(v.alt.title)}</a> <span class="muted">(${esc(v.alt.channel)})</span></span>` : ''}
+      </p>
+    </section>`;
+  }
+
+  // ---------- labs ----------
+  const labDone = id => state.labs[id] || {};
+  const labProgress = l => ({ done: l.steps.filter((_, i) => labDone(l.id)[i]).length, total: l.steps.length });
+  // fmt() plus clickable public URLs (placeholders such as https://<resource>... are left as text).
+  const labFmt = s => fmt(s).replace(/(<code>.*?<\/code>)|(https?:\/\/[a-z0-9.-]+\.[a-z]{2,}[^\s<&)"]*)/gi, (m, code, url) => {
+    if (code) return code;
+    const clean = url.replace(/[.,]+$/, ''), rest = url.slice(clean.length);
+    return `<a href="${clean}" target="_blank" rel="noopener">${clean}</a>${rest}`;
+  });
+
+  // Architecture diagram as inline SVG: one horizontal layout for wide screens, one vertical for phones.
+  function archSvg(nodes) {
+    const box = (x, y, w, h, n, i) => `<g class="arch-node k-${n.k}">
+        <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12"/>
+        <text x="${x + 14}" y="${y + 24}" class="arch-n">${i + 1}</text>
+        <text x="${x + w / 2}" y="${y + h / 2 - 1}" text-anchor="middle" class="arch-t">${esc(n.t)}</text>
+        <text x="${x + w / 2}" y="${y + h / 2 + 18}" text-anchor="middle" class="arch-d">${esc(n.d)}</text>
+      </g>`;
+    const W = 196, H = 92, G = 40, n = nodes.length;
+    const hw = n * W + (n - 1) * G + 8;
+    const horiz = `<svg class="arch-h" viewBox="0 0 ${hw} ${H + 8}" role="img" aria-label="Architecture: ${esc(nodes.map(x => x.t).join(' → '))}">
+      <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="arch-arrowhead"/></marker></defs>
+      ${nodes.map((nd, i) => box(4 + i * (W + G), 4, W, H, nd, i)).join('')}
+      ${nodes.slice(1).map((_, i) => `<line x1="${4 + (i + 1) * W + i * G + 4}" y1="${4 + H / 2}" x2="${4 + (i + 1) * (W + G) - 6}" y2="${4 + H / 2}" class="arch-line" marker-end="url(#ah)"/>`).join('')}
+    </svg>`;
+    const VW = 320, VH = 70, VG = 26;
+    const vert = `<svg class="arch-v" viewBox="0 0 ${VW + 8} ${n * VH + (n - 1) * VG + 8}" role="img" aria-label="Architecture: ${esc(nodes.map(x => x.t).join(' → '))}">
+      <defs><marker id="av" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="arch-arrowhead"/></marker></defs>
+      ${nodes.map((nd, i) => box(4, 4 + i * (VH + VG), VW, VH, nd, i)).join('')}
+      ${nodes.slice(1).map((_, i) => `<line x1="${4 + VW / 2}" y1="${4 + (i + 1) * VH + i * VG + 3}" x2="${4 + VW / 2}" y2="${4 + (i + 1) * (VH + VG) - 5}" class="arch-line" marker-end="url(#av)"/>`).join('')}
+    </svg>`;
+    return horiz + vert;
+  }
+
+  function labsIndex() {
+    app.innerHTML = `
+      <nav class="crumbs"><a href="#/">Home</a><span>/</span>Labs</nav>
+      <section class="guide-hero">
+        <h1>Hands-on labs</h1>
+        <p class="lede">Five realistic mini-projects you build in your own Azure subscription. Each has a scenario, downloadable sample files, step-by-step instructions, code, checkpoints that tell you what you should see, and links to the exam questions each step prepares you for.</p>
+        <div class="lab-note"><b>Before you start</b> Use one resource group (<code>rg-ai103-labs</code>) for every lab and delete it when you finish. Each lab lists its approximate cost. Azure portal menus change often: if a label differs, use the search box at the top of the portal.</div>
+      </section>
+      <div class="lab-grid">
+        ${LABS.map(l => {
+          const p = labProgress(l);
+          return `<a class="lab-card" href="#/labs/${l.id}">
+            <div class="lab-card-top"><span class="badge">${esc(l.badge)}</span><span class="lab-company">${esc(l.company)}</span><span class="lab-meta">${esc(l.level)} · ${esc(l.time)}</span></div>
+            <h3>${esc(l.title)}</h3>
+            <p>${esc(l.tagline)}</p>
+            <div class="chips">${l.services.slice(0, 4).map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div>
+            <div class="mc-foot"><span>${p.done}/${p.total} steps done</span>${p.done === p.total ? '<span class="read-tag">✓ Complete</span>' : ''}</div>
+            ${bar(p.done, p.total, 'good thin')}
+          </a>`;
+        }).join('')}
+      </div>`;
+  }
+
+  function labPage(id) {
+    const l = labById.get(id);
+    if (!l) return go('#/labs');
+    const i = LABS.indexOf(l), prev = LABS[i - 1], next = LABS[i + 1];
+    const p = labProgress(l), done = labDone(l.id);
+    const qButtons = ids => (ids || []).filter(n => byId.has(n)).map(n => `<button class="btn small secondary" data-try="${n}">Q${n}</button>`).join('');
+    app.innerHTML = `
+      <nav class="crumbs"><a href="#/">Home</a><span>/</span><a href="#/labs">Labs</a><span>/</span>${esc(l.title)}</nav>
+      <article class="module lab">
+        <header class="module-head">
+          <span class="badge lg">${esc(l.badge)}</span>
+          <div>
+            <p class="eyebrow">${esc(l.company)} · ${esc(l.level)} · about ${esc(l.time)}</p>
+            <h1>${esc(l.title)}</h1>
+            <p class="lede">${esc(l.tagline)}</p>
+          </div>
+        </header>
+        <section class="example">
+          <p class="eyebrow">The scenario</p>
+          <p class="ex-setting">${labFmt(l.scenario)}</p>
+        </section>
+        <div class="lab-cols">
+          <section class="card"><h2>You will learn to</h2><ul class="points">${l.outcomes.map(o => `<li>${labFmt(o)}</li>`).join('')}</ul></section>
+          <section class="card"><h2>Before you start</h2><ul class="points">${l.prereqs.map(o => `<li>${labFmt(o)}</li>`).join('')}</ul>
+            <div class="chips">${l.services.map(s => `<span class="chip">${esc(s)}</span>`).join('')}</div></section>
+        </div>
+        <figure class="arch"><figcaption>What you will build</figcaption>${archSvg(l.arch)}</figure>
+        <section>
+          <h2>Download the sample files</h2>
+          <ul class="files">${l.files.map(f => `<li><a class="file" href="${esc(f.href)}" download><span class="file-ic" aria-hidden="true">⬇</span><span><b>${esc(f.label)}</b><small>${esc(f.note)}</small></span></a></li>`).join('')}</ul>
+          ${l.gallery.length ? `<div class="shots">${l.gallery.map(g => `<figure class="shot"><button class="zoom" data-zoom="${esc(g.src)}" aria-label="Enlarge: ${esc(g.caption)}"><img src="${esc(g.src)}" alt="${esc(g.caption)}" loading="lazy"></button><figcaption>${labFmt(g.caption)}</figcaption></figure>`).join('')}</div>` : ''}
+        </section>
+        <section class="lab-steps">
+          <div class="lab-progress card">
+            <div><h2>Walkthrough</h2><p class="muted" id="lab-count">${p.done} of ${p.total} steps done</p></div>
+            <div id="lab-bar">${bar(p.done, p.total, 'good')}</div>
+          </div>
+          <ol class="steps">
+            ${l.steps.map((s, n) => `<li class="step ${done[n] ? 'done' : ''}" id="step-${n + 1}">
+              <header class="step-head">
+                <span class="step-num">${n + 1}</span>
+                <h3>${esc(s.t)}</h3>
+                ${s.time ? `<span class="step-time">${esc(s.time)}</span>` : ''}
+              </header>
+              ${s.body ? `<p>${labFmt(s.body)}</p>` : ''}
+              ${s.do ? `<ol class="do">${s.do.map(d => `<li>${labFmt(d)}</li>`).join('')}</ol>` : ''}
+              ${s.code ? `<div class="code"><div class="code-bar"><span>${esc(s.code.lang)}</span><button class="btn small ghost" data-copy="${n}">Copy</button></div><pre><code>${esc(s.code.src)}</code></pre></div>` : ''}
+              ${s.img ? `<figure class="shot step-img"><button class="zoom" data-zoom="${esc(s.img.src)}" aria-label="Enlarge: ${esc(s.img.caption)}"><img src="${esc(s.img.src)}" alt="${esc(s.img.caption)}" loading="lazy"></button><figcaption>${labFmt(s.img.caption)}</figcaption></figure>` : ''}
+              ${s.expect ? `<div class="expect"><b>Checkpoint: you should see</b><span>${labFmt(s.expect)}</span></div>` : ''}
+              ${s.tip || (s.q && s.q.length) ? `<div class="nugget"><span class="nugget-icon" aria-hidden="true">🎯</span><div><b>Exam link</b>${s.tip ? `<span>${labFmt(s.tip)}</span>` : ''}${s.q && s.q.length ? `<div class="row q-links">${qButtons(s.q)}</div>` : ''}</div></div>` : ''}
+              <label class="check step-check"><input type="checkbox" data-step="${n}" ${done[n] ? 'checked' : ''}> I've done this step</label>
+            </li>`).join('')}
+          </ol>
+        </section>
+        <section class="card warn-card"><h2>Clean up</h2><ul class="points">${l.cleanup.map(c => `<li>${labFmt(c)}</li>`).join('')}</ul></section>
+        <section>
+          <h2>What this lab means for the exam</h2>
+          <div class="table-wrap"><table class="clues"><thead><tr><th>If the question says…</th><th>Think…</th></tr></thead><tbody>
+            ${l.exam.map(([a, b]) => `<tr><td>${labFmt(a)}</td><td>${labFmt(b)}</td></tr>`).join('')}
+          </tbody></table></div>
+        </section>
+        <section class="module-cta card">
+          <div><h2>Go deeper on Microsoft Learn</h2><p class="muted">Official documentation with up-to-date portal screenshots.</p></div>
+          <div class="row">${l.docs.map(([label, terms]) => `<a class="btn ghost" href="https://learn.microsoft.com/search/?terms=${encodeURIComponent(terms)}" target="_blank" rel="noopener">${esc(label)} ↗</a>`).join('')}</div>
+        </section>
+        <nav class="pager">
+          ${prev ? `<a href="#/labs/${prev.id}"><small>Previous lab</small>${esc(prev.title)}</a>` : '<span></span>'}
+          ${next ? `<a class="next" href="#/labs/${next.id}"><small>Next lab</small>${esc(next.title)}</a>` : '<span></span>'}
+        </nav>
+      </article>`;
+
+    $$('[data-step]').forEach(cb => cb.onchange = () => {
+      const n = Number(cb.dataset.step), rec = { ...labDone(l.id) };
+      if (cb.checked) rec[n] = true; else delete rec[n];
+      state.labs[l.id] = rec; save();
+      cb.closest('.step').classList.toggle('done', cb.checked);
+      const pp = labProgress(l);
+      $('#lab-count').textContent = `${pp.done} of ${pp.total} steps done`;
+      $('#lab-bar').innerHTML = bar(pp.done, pp.total, 'good');
+      if (pp.done === pp.total) toast('Lab complete. Nice work! Remember to clean up.');
+    });
+    $$('[data-copy]').forEach(b => b.onclick = async () => {
+      const src = l.steps[Number(b.dataset.copy)].code.src;
+      try { await navigator.clipboard.writeText(src); b.textContent = 'Copied'; } catch { b.textContent = 'Select & copy'; }
+      setTimeout(() => { b.textContent = 'Copy'; }, 1600);
+    });
     $$('[data-try]').forEach(b => b.onclick = () => newSession('learn', [Number(b.dataset.try)], { label: 'Question ' + b.dataset.try }));
     bindZoom();
   }

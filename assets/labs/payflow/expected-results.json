@@ -1,0 +1,23 @@
+[
+  {
+    "invoice": "BLP-1001",
+    "vendor": "Brightleaf Packaging Co.",
+    "subtotal": 808.5,
+    "tax": 161.7,
+    "total_printed": 970.2
+  },
+  {
+    "invoice": "NCR-2207",
+    "vendor": "Northgate Coffee Roasters",
+    "subtotal": 1008.0,
+    "tax": 201.6,
+    "total_printed": 1072.8
+  },
+  {
+    "invoice": "KCS-0388",
+    "vendor": "Kestrel Cleaning Supplies",
+    "subtotal": 3957.0,
+    "tax": 791.4,
+    "total_printed": 4748.4
+  }
+]

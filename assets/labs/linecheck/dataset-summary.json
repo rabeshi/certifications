@@ -1,0 +1,7 @@
+{
+  "training_images": 24,
+  "training_discs": 40,
+  "training_cracks": 26,
+  "images_with_a_crack": 21,
+  "test_images": 6
+}
