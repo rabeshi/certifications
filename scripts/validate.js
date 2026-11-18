@@ -4,7 +4,7 @@ const assert = require('assert/strict');
 
 const box = { window: {} };
 vm.createContext(box);
-for (const file of ['data/questions.js', 'data/tutorial.js', 'js/grading.js']) vm.runInContext(fs.readFileSync(file, 'utf8'), box, { filename: file });
+for (const file of ['data/questions.js', 'data/tutorial.js', 'data/hints.js', 'js/grading.js']) vm.runInContext(fs.readFileSync(file, 'utf8'), box, { filename: file });
 const bank = box.window.AI103_QUESTIONS;
 const guide = box.window.AI103_TUTORIAL;
 const G = box.window.AI103_GRADING;
@@ -64,6 +64,13 @@ assert.equal(G.isCorrect(bank[164], ['C']), false);
 assert.equal(G.isCorrect(bank[15], ['"tool_choice"', '"required"']), true, 'Q16 quoted drag values');
 assert.equal(G.isAnswered(q3, ['', '']), false);
 
+// Every question has a hint that does not simply quote the answer letter.
+const hints = box.window.AI103_HINTS;
+for (const q of bank) {
+  assert.ok(hints[q.id] && hints[q.id].length > 30, `Q${q.id} missing hint`);
+  assert.ok(!/(?:answer|option) [A-H]/i.test(hints[q.id]), `Q${q.id} hint names an option letter`);
+}
+
 // Study guide integrity.
 assert.equal(guide[0].id, 'overview');
 for (const m of guide) {
@@ -72,4 +79,4 @@ for (const m of guide) {
   if (m.id !== 'overview') assert.ok(bank.some(q => q.module === m.id), `Module ${m.id} has no practice questions`);
 }
 
-console.log(`PASS: ${bank.length} questions (${bank.filter(q => q.answerFields.length).length} answer-area, ${bank.filter(q => G.kind(q) === 'pairs').length} drag-drop, ${bank.filter(q => G.kind(q) === 'options').length} multiple-choice); every question answerable; ${guide.length} study-guide modules verified.`);
+console.log(`PASS: ${bank.length} questions (${bank.filter(q => q.answerFields.length).length} answer-area, ${bank.filter(q => G.kind(q) === 'pairs').length} drag-drop, ${bank.filter(q => G.kind(q) === 'options').length} multiple-choice); every question answerable and hinted; ${guide.length} study-guide modules verified.`);

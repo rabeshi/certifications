@@ -4,6 +4,7 @@
   const BANK = window.AI103_QUESTIONS || [];
   const GUIDE = window.AI103_TUTORIAL || [];
   const G = window.AI103_GRADING;
+  const HINTS = window.AI103_HINTS || {};
   const KEY = 'ai103QuizLab.v3';
   const TARGET = 70; // practice pass target, %
   const byId = new Map(BANK.map(q => [q.id, q]));
@@ -373,11 +374,13 @@
     const ok = G.isCorrect(q, answer), answered = G.isAnswered(q, answer);
     const mod = moduleById.get(q.module);
     const wrongs = Object.entries(q.incorrectExplanations || {});
+    const hint = HINTS[q.id];
     return `
       <div class="feedback ${ok ? 'ok' : 'bad'}" role="status">
         <div class="fb-title">${ok ? '✓ Correct' : answered ? '✗ Not quite' : '– Not answered'}</div>
         ${ok || G.kind(q) !== 'options' ? (ok ? '' : '<div class="fb-answer"><span>Corrections are marked on each item above</span></div>') : `<div class="fb-answer"><span>Correct answer</span><ul>${answerLines(q).map(l => `<li>${esc(l)}</li>`).join('')}</ul></div>`}
       </div>
+      ${hint ? `<div class="nugget"><span class="nugget-icon" aria-hidden="true">💡</span><div><b>Key clue</b>${esc(hint)}</div></div>` : ''}
       ${figures(q.answerImages, 'Answer exhibit')}
       <details class="explain" open><summary>Explanation</summary><div class="prose">${explanationHtml(q)}</div></details>
       ${wrongs.length ? `<details class="explain"><summary>Why the other options are wrong</summary><div class="prose">${wrongs.map(([k, v]) => `<p><strong>${esc(k)}.</strong> ${esc(reflow(v))}</p>`).join('')}</div></details>` : ''}
@@ -410,6 +413,7 @@
     const nextLabel = mode === 'exam' ? (last ? 'Finish exam' : 'Next →')
       : mode === 'review' ? (last ? 'Back to results' : 'Next →')
       : last ? 'Finish session' : locked ? 'Next →' : 'Skip →';
+    const showHintButton = mode === 'learn' && !locked && !!HINTS[q.id];
 
     app.innerHTML = `
       <div class="q-layout">
@@ -426,10 +430,12 @@
           <p class="instruction">${instruction(q)}</p>
           <div id="answer">${answerInput(q, s, answer, locked)}</div>
           <p class="hint" id="hint" hidden></p>
+          ${showHintButton ? `<div class="nugget clue" id="hintbox" ${s.hints && s.hints[q.id] ? '' : 'hidden'}><span class="nugget-icon" aria-hidden="true">💡</span><div><b>Hint</b>${esc(HINTS[q.id])}</div></div>` : ''}
           ${locked ? feedback(q, answer) : ''}
           <div class="qactions">
             <button class="btn secondary" id="prev" ${s.index ? '' : 'disabled'}>← Previous</button>
             <span class="spacer"></span>
+            ${showHintButton ? `<button class="btn ghost" id="hint-btn" aria-expanded="${!!(s.hints && s.hints[q.id])}" aria-controls="hintbox">💡 ${s.hints && s.hints[q.id] ? 'Hide hint' : 'Hint'}</button>` : ''}
             ${mode === 'learn' && !locked ? '<button class="btn" id="check">Check answer</button>' : ''}
             <button class="btn ${mode === 'learn' && !locked ? 'secondary' : ''}" id="next">${nextLabel}</button>
           </div>
@@ -448,6 +454,16 @@
       save(); const on = !!state.flagged[q.id];
       $('#flag').classList.toggle('on', on); $('#flag').setAttribute('aria-pressed', on); $('#flag').textContent = '⚑ ' + (on ? 'Flagged' : 'Flag');
       updateLive(mode);
+    };
+    if ($('#hint-btn')) $('#hint-btn').onclick = () => {
+      s.hints = s.hints || {};
+      s.hints[q.id] ? delete s.hints[q.id] : (s.hints[q.id] = true);
+      save();
+      const open = !!s.hints[q.id];
+      $('#hintbox').hidden = !open;
+      $('#hint-btn').textContent = '💡 ' + (open ? 'Hide hint' : 'Hint');
+      $('#hint-btn').setAttribute('aria-expanded', open);
+      renderScorebar(mode);
     };
     if ($('#check')) $('#check').onclick = () => {
       const a = readAnswer(q);
