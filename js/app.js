@@ -17,20 +17,32 @@
   const scorebar = document.getElementById('scorebar');
 
   // ---------- state ----------
-  const blank = () => ({ completed: {}, flagged: {}, history: [], bestScore: 0, learn: null, exam: null, review: null, read: {}, prefs: { liveScore: false } });
+  // Bump BANK_EDITION whenever a new PDF edition renumbers questions, and add the id mapping below.
+  const BANK_EDITION = 2;
+  const blank = () => ({ edition: BANK_EDITION, completed: {}, flagged: {}, history: [], bestScore: 0, learn: null, exam: null, review: null, read: {}, prefs: { liveScore: false } });
+  // Edition 1 -> 2 (Final Updated.pdf): the Contoso case study moved from 166-175 to 186-196 (195 is new).
+  const CASE_MOVE = { 166: 186, 167: 187, 168: 188, 169: 189, 170: 190, 171: 191, 172: 192, 173: 193, 174: 194, 175: 196 };
+  const remapIds = (o, fn) => Object.fromEntries(Object.entries(o || {}).map(([id, v]) => [fn(Number(id)), v]));
   let state = load();
+  save(); // persist any migration immediately
 
   function load() {
     let s = blank();
     try {
       const raw = localStorage.getItem(KEY);
-      if (raw) s = { ...s, ...JSON.parse(raw) };
-      else {
-        // Earlier bank numbering: questions 148+ moved down by 18 when the updated PDF was imported.
+      if (raw) {
+        s = { ...s, edition: 1, ...JSON.parse(raw) };
+        if (s.edition < 2) {
+          // Saved ids 166-175 now point at new questions; move them and drop sessions built on the old numbering.
+          const fn = id => CASE_MOVE[id] || id;
+          s = { ...s, edition: 2, completed: remapIds(s.completed, fn), flagged: remapIds(s.flagged, fn), learn: null, exam: null, review: null };
+        }
+      } else {
+        // Oldest bank numbering: questions 148+ moved down by 18, then the case study moved again in edition 2.
         const old = JSON.parse(localStorage.getItem('ai103QuizLab.v2') || 'null');
         if (old) {
-          const remap = o => Object.fromEntries(Object.entries(o || {}).map(([id, v]) => [Number(id) >= 148 ? Number(id) + 18 : id, v]));
-          s = { ...s, completed: remap(old.completed), flagged: remap(old.flagged), history: old.history || [], bestScore: old.bestScore || 0 };
+          const fn = id => { const v1 = id >= 148 ? id + 18 : id; return CASE_MOVE[v1] || v1; };
+          s = { ...s, completed: remapIds(old.completed, fn), flagged: remapIds(old.flagged, fn), history: old.history || [], bestScore: old.bestScore || 0 };
         }
       }
     } catch { /* storage unavailable or corrupt: start fresh */ }

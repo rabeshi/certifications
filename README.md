@@ -1,6 +1,6 @@
 # AI-103 Quiz Lab
 
-Static, dependency-free study app built from the bundled `Updated AI-103.pdf` (175 questions). Open `index.html` directly or deploy the folder to Vercel; no backend is required. Progress is stored in the browser (`localStorage`).
+Static, dependency-free study app built from the bundled `Final Updated.pdf` (226 questions). Open `index.html` directly or deploy the folder to Vercel; no backend is required. Progress is stored in the browser (`localStorage`).
 
 ## What's in it
 
@@ -14,7 +14,9 @@ Static, dependency-free study app built from the bundled `Updated AI-103.pdf` (1
 | Path | Purpose |
 | --- | --- |
 | `data/questions.js` | Generated question bank (do not edit by hand) |
-| `data/image-options.json` | Hand-transcribed answer areas (drop-downs, Yes/No, ordering) for image-based questions |
+| `data/image-options.json` | Hand-transcribed answer areas (drop-downs, Yes/No) for image-based questions |
+| `data/drag-overrides.json` | Hand-transcribed drag-and-drop targets and values (including ordering questions) |
+| `data/hints.js` | One study hint per question for Learning mode |
 | `data/question-modules.json` | Hand-reviewed study-guide module for every question |
 | `data/tutorial.js` | Study guide content |
 | `js/grading.js` | Answer grading, shared by the app and the validator |
@@ -28,4 +30,4 @@ python scripts/import_pdf.py       # rebuild data/questions.js
 node scripts/validate.js           # checks every question is answerable and the guide is consistent
 ```
 
-Requires Python with `pypdf` and `Pillow`. Questions 148–165 are new in the updated PDF; the former case-study questions 148–157 are now 166–175, and saved progress from the old numbering is migrated automatically.
+Requires Python with `pypdf` and `Pillow`. `Final Updated.pdf` adds 51 questions (166–185, 195 and 197–226) and moves the Contoso case study to 186–196 (it previously held 166–175). Saved progress from earlier numberings is migrated automatically when the app loads.

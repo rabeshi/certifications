@@ -52,10 +52,11 @@ def answer_ids(answer, options):
     return ids
 
 # Exhibits the position-based extractor files under the question although they show the completed answer.
-ANSWER_IMAGE_FIXES = {127: ["assets/questions/q127-p132-b749788c.png"]}
+# Matched by image-hash prefix so page renumbering in a new PDF edition does not break the fix.
+ANSWER_IMAGE_FIXES = {127: ["b749788c"], 218: ["8f138174"]}
 
 def main():
-    reader=PdfReader(ROOT/"Updated AI-103.pdf")
+    reader=PdfReader(ROOT/"Final Updated.pdf")
     image_manifest=json.loads((ROOT/"data"/"images.json").read_text(encoding="utf-8")) if (ROOT/"data"/"images.json").exists() else {}
     drag_candidates={
         6:["Code interpreter","Computer use","File search","Grounding with Bing Search","Microsoft Fabric"],
@@ -73,12 +74,17 @@ def main():
     case_start=full.find('Case Study')
     case_question=next((m for m in starts if m.start()>case_start), None) if case_start>=0 else None
     case_context=clean(full[case_start:case_question.start()]) if case_question else ''
+    # The case study is bracketed: questions after the "Case Study ends here" banner are standalone again.
+    end_hit=re.search(r'(?m)^\**\s*The Case Study ends here.*$',full)
+    case_end=end_hit.start() if end_hit else len(full)
+    drag_overrides=json.loads((ROOT/'data'/'drag-overrides.json').read_text(encoding='utf-8'))
     overrides=json.loads((ROOT/'data'/'image-options.json').read_text(encoding='utf-8'))
     module_map={str(n):key for key,ids in json.loads((ROOT/'data'/'question-modules.json').read_text(encoding='utf-8')).items() if key!='_note' for n in ids}
     module_names={key:name for key,name,_ in MODULES}
     for idx,m in enumerate(starts):
         number=int(m.group(1)); end=starts[idx+1].start() if idx+1<len(starts) else len(full)
         if m.start()<case_start<end: end=case_start
+        if m.start()<case_end<end: end=case_end
         block=clean(full[m.end():end])
         parts=re.split(r"(?mi)^Answer(?:\s*:|\s*$)\s*",block,maxsplit=1); stem_raw=parts[0].strip(); ae=parts[1].strip() if len(parts)==2 else ""
         ap=re.split(r"(?mi)^Explanation\s*:?\s*",ae,maxsplit=1); answer=clean(ap[0]); explanation=clean(ap[1]) if len(ap)==2 else ""
@@ -95,6 +101,10 @@ def main():
             answer=clean(supplied)
         if answer and not explanation:
             explanation=answer
+        # A series preamble printed at the end of one answer belongs to the next question, not this explanation.
+        explanation=re.split(r"(?m)^Note: This question is part of a series",explanation,maxsplit=1)[0].strip()
+        answer=re.split(r"(?m)^Note: This question is part of a series",answer,maxsplit=1)[0].strip()
+        stem_raw=re.sub(r"(?i)\n\s*Explanation\s*:?\s*$","",stem_raw).strip()
         question,options=parse_options(stem_raw); correct=answer_ids(answer,options); low=stem_raw.lower()
         qtype="drag-drop" if any(x in low for x in ["drag","arrange","sequence"]) else "yes-no-matrix" if ("select yes" in low or "yes if" in low) else "code-completion" if ("complete the code" in low or "complete the script" in low) else "dropdown-hotspot" if ("answer area" in low or "hotspot" in low) else "multiple" if ("each correct" in low or len(correct)>1) else "single"
         incorrect={}; ip=re.split(r"(?i)Incorrect Answers?:",explanation,maxsplit=1)
@@ -112,15 +122,18 @@ def main():
                     pairs.append({"target":hit.group(1).strip(),"value":hit.group(2).strip()})
         images=image_manifest.get(str(number),{'sourceImages':[],'answerImages':[]})
         images={k:list(v) for k,v in images.items()}
-        for leaked in ANSWER_IMAGE_FIXES.get(number,[]):
-            if leaked in images['sourceImages']:
+        for digest in ANSWER_IMAGE_FIXES.get(number,[]):
+            for leaked in [src for src in images['sourceImages'] if src.endswith(f'-{digest}.png')]:
                 images['sourceImages'].remove(leaked); images['answerImages'].append(leaked)
+        override=drag_overrides.get(str(number))
+        if override:
+            qtype='drag-drop'; pairs=override['pairs']; drag_candidates[number]=override['candidates']
         if pairs: needs=False
         fields=overrides.get(str(number),[])
         if fields:
             qtype='yes-no-matrix' if all(f['choices']==['Yes','No'] for f in fields) else 'dropdown-hotspot'
             needs=False
-        questions.append({"id":number,"type":qtype,"question":question,"options":options,"answerFields":fields,"correctAnswer":correct,"sourceAnswer":answer,"explanation":explanation,"incorrectExplanations":incorrect,"matchingPairs":pairs,"dragCandidates":drag_candidates.get(number,[]),"sourceImages":images.get('sourceImages',[]),"answerImages":images.get('answerImages',[]),"caseStudy":case_context if case_question and m.start()>=case_question.start() else '',"module":module,"memoryCue":cue,"topic":topic,"sourceQuestionNumber":number,"needsReview":needs,"sourceMaterial":stem_raw if needs else ""})
+        questions.append({"id":number,"type":qtype,"question":question,"options":options,"answerFields":fields,"correctAnswer":correct,"sourceAnswer":answer,"explanation":explanation,"incorrectExplanations":incorrect,"matchingPairs":pairs,"dragCandidates":drag_candidates.get(number,[]),"sourceImages":images.get('sourceImages',[]),"answerImages":images.get('answerImages',[]), "caseStudy":case_context if case_question and case_question.start()<=m.start()<case_end else '',"module":module,"memoryCue":cue,"topic":topic,"sourceQuestionNumber":number,"needsReview":needs,"sourceMaterial":stem_raw if needs else ""})
     out=ROOT/"data"/"questions.js"; out.write_text("window.AI103_QUESTIONS = "+json.dumps(questions,ensure_ascii=False,indent=2)+";\n",encoding="utf-8")
     print(json.dumps({"pages":len(reader.pages),"questions":len(questions),"first":questions[0]["id"],"last":questions[-1]["id"],"needsReview":sum(q["needsReview"] for q in questions)},indent=2))
 

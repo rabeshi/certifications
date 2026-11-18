@@ -5,7 +5,7 @@ from pathlib import Path
 from PIL import Image
 from pypdf import PdfReader
 
-root=Path(__file__).resolve().parents[1]; reader=PdfReader(root/'Updated AI-103.pdf')
+root=Path(__file__).resolve().parents[1]; reader=PdfReader(root/'Final Updated.pdf')
 pages=[]; frequency=Counter()
 for index,page in enumerate(reader.pages,1):
     found=[]
