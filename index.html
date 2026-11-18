@@ -1,1 +1,40 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI-103 Quiz Lab</title><link rel="stylesheet" href="css/styles.css"></head><body><header><div><h1>AI-103 Quiz Lab</h1><p>157-question Microsoft Foundry study lab</p></div><button id="reset" class="ghost">Reset Progress</button></header><main id="app"></main><script src="data/questions.js"></script><script src="js/app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>AI-103 Quiz Lab</title>
+  <meta name="description" content="AI-103 study guide, learning mode and timed mock exams built from the updated 175-question practice bank.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="top">
+    <header class="topbar">
+      <a class="brand" href="#/">
+        <span class="brand-mark" aria-hidden="true">103</span>
+        <span><strong>AI-103 Quiz Lab</strong><small>Azure AI apps &amp; agents</small></span>
+      </a>
+      <nav class="mainnav" aria-label="Main">
+        <a href="#/" data-nav="home">Home</a>
+        <a href="#/guide" data-nav="guide">Study guide</a>
+        <a href="#/learn" data-nav="learn">Learn</a>
+        <a href="#/exam" data-nav="exam">Exam</a>
+      </nav>
+    </header>
+    <div id="scorebar" class="scorebar" hidden></div>
+  </div>
+  <main id="app" tabindex="-1"></main>
+  <dialog id="lightbox" aria-label="Enlarged exhibit">
+    <form method="dialog"><button class="lightbox-close" aria-label="Close">×</button></form>
+    <img alt="">
+  </dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="data/questions.js"></script>
+  <script src="data/tutorial.js"></script>
+  <script src="data/hints.js"></script>
+  <script src="data/examples.js"></script>
+  <script src="js/grading.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
