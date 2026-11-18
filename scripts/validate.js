@@ -4,7 +4,7 @@ const assert = require('assert/strict');
 
 const box = { window: {} };
 vm.createContext(box);
-for (const file of ['data/questions.js', 'data/tutorial.js', 'data/hints.js', 'data/examples.js', 'js/grading.js']) vm.runInContext(fs.readFileSync(file, 'utf8'), box, { filename: file });
+for (const file of ['data/questions.js', 'data/tutorial.js', 'data/hints.js', 'data/examples.js', 'data/videos.js', 'data/labs.js', 'js/grading.js']) vm.runInContext(fs.readFileSync(file, 'utf8'), box, { filename: file });
 const bank = box.window.AI103_QUESTIONS;
 const guide = box.window.AI103_TUTORIAL;
 const G = box.window.AI103_GRADING;
@@ -92,3 +92,28 @@ for (const m of guide) {
 }
 
 console.log(`PASS: ${bank.length} questions (${bank.filter(q => q.answerFields.length).length} answer-area, ${bank.filter(q => G.kind(q) === 'pairs').length} drag-drop, ${bank.filter(q => G.kind(q) === 'options').length} multiple-choice); every question answerable and hinted; ${guide.length} study-guide modules with real-world examples verified.`);
+
+// Study-guide videos: one verified YouTube id per module.
+for (const m of guide) {
+  const v = box.window.AI103_VIDEOS[m.id];
+  assert.ok(v && /^[\w-]{11}$/.test(v.main.id) && v.main.title && v.why, `Module ${m.id} needs a video`);
+  if (v.alt) assert.ok(/^[\w-]{11}$/.test(v.alt.id) && v.alt.id !== v.main.id, `Module ${m.id} alt video`);
+}
+
+// Hands-on labs: files and images exist, linked questions exist, modules are real.
+const labs = box.window.AI103_LABS;
+assert.equal(labs.length, 5, 'Expected five labs');
+assert.equal(new Set(labs.map(l => l.id)).size, labs.length, 'Duplicate lab id');
+const ids = new Set(bank.map(q => q.id));
+for (const l of labs) {
+  assert.ok(l.title && l.company && l.scenario && l.outcomes.length && l.arch.length >= 3 && l.steps.length >= 5 && l.cleanup.length && l.exam.length, `Lab ${l.id} incomplete`);
+  for (const m of l.modules) assert.ok(modules.has(m), `Lab ${l.id} unknown module ${m}`);
+  for (const f of l.files) assert.ok(fs.existsSync(f.href), `Lab ${l.id} missing file ${f.href}`);
+  for (const g of l.gallery) assert.ok(fs.existsSync(g.src), `Lab ${l.id} missing image ${g.src}`);
+  for (const [n, st] of l.steps.entries()) {
+    assert.ok(st.t && (st.body || st.do || st.code), `Lab ${l.id} step ${n + 1} empty`);
+    if (st.img) assert.ok(fs.existsSync(st.img.src), `Lab ${l.id} step ${n + 1} missing image`);
+    for (const q of st.q || []) assert.ok(ids.has(q), `Lab ${l.id} step ${n + 1} links missing Q${q}`);
+  }
+}
+console.log(`PASS: ${guide.length} module videos and ${labs.length} labs (${labs.reduce((a, l) => a + l.steps.length, 0)} steps) verified.`);

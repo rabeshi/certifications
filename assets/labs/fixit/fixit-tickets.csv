@@ -1,0 +1,121 @@
+ticket_id,created,category,priority,status,minutes_to_resolve,site
+FX-4100,2026-09-24,Password/MFA,P2,Closed,54,Dublin
+FX-4101,2026-09-06,VPN,P3,Closed,1836,Dublin
+FX-4102,2026-09-04,Password/MFA,P4,Closed,2963,London
+FX-4103,2026-09-20,VPN,P4,Closed,2814,Dublin
+FX-4104,2026-10-16,Software,P2,Closed,322,London
+FX-4105,2026-09-30,Laptop,P3,Closed,2237,Dublin
+FX-4106,2026-09-06,New starter,P4,Closed,3463,Dublin
+FX-4107,2026-09-05,Password/MFA,P3,Closed,1898,London
+FX-4108,2026-10-13,Laptop,P2,Closed,107,London
+FX-4109,2026-10-02,Printer,P3,Closed,1453,Dublin
+FX-4110,2026-09-04,Printer,P2,Closed,168,Dublin
+FX-4111,2026-10-27,Printer,P3,Closed,1885,Dublin
+FX-4112,2026-10-20,Password/MFA,P4,Closed,2622,Leeds
+FX-4113,2026-09-26,VPN,P2,Closed,476,Dublin
+FX-4114,2026-09-23,Password/MFA,P2,Closed,472,Dublin
+FX-4115,2026-09-15,Software,P4,Closed,1219,London
+FX-4116,2026-09-24,Laptop,P3,Closed,76,Dublin
+FX-4117,2026-10-18,Laptop,P4,Closed,3129,London
+FX-4118,2026-09-26,Laptop,P4,Closed,2207,London
+FX-4119,2026-09-22,Laptop,P3,Closed,915,Dublin
+FX-4120,2026-09-05,VPN,P1,Closed,58,London
+FX-4121,2026-10-25,Laptop,P2,Closed,207,Leeds
+FX-4122,2026-09-22,New starter,P4,Closed,1190,Dublin
+FX-4123,2026-10-04,Password/MFA,P4,Open,,Leeds
+FX-4124,2026-10-26,VPN,P3,Open,,London
+FX-4125,2026-10-05,Printer,P2,Closed,115,Dublin
+FX-4126,2026-09-26,Password/MFA,P2,Closed,433,Dublin
+FX-4127,2026-10-01,Software,P2,Closed,212,Leeds
+FX-4128,2026-09-07,VPN,P3,Closed,1491,London
+FX-4129,2026-09-23,Laptop,P3,Open,,Dublin
+FX-4130,2026-09-28,VPN,P3,Open,,Dublin
+FX-4131,2026-09-06,Password/MFA,P4,Closed,2244,Dublin
+FX-4132,2026-10-10,VPN,P4,Closed,3903,Dublin
+FX-4133,2026-09-01,New starter,P4,Closed,2845,Dublin
+FX-4134,2026-09-02,Laptop,P3,Open,,Leeds
+FX-4135,2026-10-24,VPN,P3,Closed,1395,London
+FX-4136,2026-10-27,VPN,P3,Closed,2176,Dublin
+FX-4137,2026-09-01,VPN,P2,Closed,39,London
+FX-4138,2026-10-04,VPN,P3,Closed,2339,Dublin
+FX-4139,2026-09-03,Laptop,P3,Closed,292,London
+FX-4140,2026-10-03,Laptop,P3,Closed,1875,Dublin
+FX-4141,2026-10-31,Laptop,P3,Closed,2244,London
+FX-4142,2026-09-08,Printer,P4,Closed,2433,Leeds
+FX-4143,2026-10-21,Password/MFA,P2,Closed,249,London
+FX-4144,2026-09-09,Software,P2,Closed,359,Leeds
+FX-4145,2026-09-11,VPN,P4,Closed,3335,Dublin
+FX-4146,2026-10-17,Password/MFA,P3,Closed,861,Leeds
+FX-4147,2026-10-10,VPN,P3,Closed,134,Leeds
+FX-4148,2026-09-03,Laptop,P2,Closed,147,London
+FX-4149,2026-10-29,Password/MFA,P2,Closed,464,Dublin
+FX-4150,2026-09-28,Laptop,P3,Closed,295,London
+FX-4151,2026-09-15,Password/MFA,P1,Closed,42,London
+FX-4152,2026-09-18,Password/MFA,P2,Open,,Dublin
+FX-4153,2026-09-13,VPN,P3,Closed,721,Leeds
+FX-4154,2026-09-18,Laptop,P3,Closed,1885,Leeds
+FX-4155,2026-09-13,Software,P4,Closed,3602,Dublin
+FX-4156,2026-10-24,Laptop,P4,Closed,3289,Leeds
+FX-4157,2026-10-16,New starter,P4,Closed,1413,Dublin
+FX-4158,2026-10-18,Laptop,P3,Closed,591,Leeds
+FX-4159,2026-09-19,Password/MFA,P1,Closed,190,Dublin
+FX-4160,2026-09-17,VPN,P2,Closed,124,Leeds
+FX-4161,2026-09-20,New starter,P4,Open,,London
+FX-4162,2026-09-13,Password/MFA,P1,Closed,117,London
+FX-4163,2026-09-03,Laptop,P1,Closed,87,Leeds
+FX-4164,2026-10-28,VPN,P3,Closed,2227,Dublin
+FX-4165,2026-10-10,Printer,P3,Closed,2084,Dublin
+FX-4166,2026-10-03,VPN,P4,Closed,3605,London
+FX-4167,2026-10-22,Software,P3,Closed,125,Dublin
+FX-4168,2026-09-24,Printer,P3,Closed,187,London
+FX-4169,2026-09-16,Password/MFA,P3,Closed,137,Leeds
+FX-4170,2026-10-04,Password/MFA,P3,Closed,2120,London
+FX-4171,2026-09-14,Printer,P3,Closed,1147,London
+FX-4172,2026-10-14,Printer,P4,Closed,914,Leeds
+FX-4173,2026-09-17,Printer,P3,Closed,377,Dublin
+FX-4174,2026-09-18,Printer,P3,Closed,111,Dublin
+FX-4175,2026-09-30,VPN,P2,Closed,178,London
+FX-4176,2026-09-05,New starter,P4,Closed,671,Dublin
+FX-4177,2026-09-06,New starter,P4,Closed,1463,London
+FX-4178,2026-10-16,Printer,P2,Open,,Leeds
+FX-4179,2026-10-02,VPN,P4,Closed,1251,Dublin
+FX-4180,2026-10-24,Laptop,P3,Closed,1468,Leeds
+FX-4181,2026-10-28,VPN,P3,Closed,551,Dublin
+FX-4182,2026-10-19,Password/MFA,P3,Open,,Leeds
+FX-4183,2026-09-16,Software,P2,Open,,Leeds
+FX-4184,2026-10-11,Password/MFA,P3,Closed,1812,Leeds
+FX-4185,2026-09-27,Software,P4,Open,,Leeds
+FX-4186,2026-10-01,Laptop,P2,Closed,278,Leeds
+FX-4187,2026-09-20,Password/MFA,P2,Closed,408,Leeds
+FX-4188,2026-10-28,Laptop,P3,Closed,722,Leeds
+FX-4189,2026-09-13,Laptop,P3,Closed,1903,London
+FX-4190,2026-10-07,VPN,P3,Closed,1039,London
+FX-4191,2026-09-25,Software,P3,Closed,1755,Leeds
+FX-4192,2026-10-04,Password/MFA,P2,Closed,324,Dublin
+FX-4193,2026-09-29,Printer,P4,Closed,2175,Leeds
+FX-4194,2026-10-28,New starter,P4,Closed,2341,Leeds
+FX-4195,2026-09-16,New starter,P4,Open,,London
+FX-4196,2026-09-03,VPN,P2,Closed,85,London
+FX-4197,2026-10-04,Printer,P2,Closed,360,Dublin
+FX-4198,2026-09-13,Password/MFA,P3,Open,,Leeds
+FX-4199,2026-09-18,Password/MFA,P3,Open,,Leeds
+FX-4200,2026-09-27,Laptop,P4,Closed,2840,Dublin
+FX-4201,2026-10-13,Laptop,P1,Closed,69,Leeds
+FX-4202,2026-10-14,New starter,P4,Closed,3542,Leeds
+FX-4203,2026-09-13,VPN,P3,Closed,2127,Leeds
+FX-4204,2026-09-07,Printer,P2,Open,,Dublin
+FX-4205,2026-10-09,Laptop,P2,Closed,278,London
+FX-4206,2026-09-04,New starter,P3,Closed,641,London
+FX-4207,2026-09-22,Password/MFA,P4,Open,,London
+FX-4208,2026-09-25,VPN,P4,Closed,1877,Leeds
+FX-4209,2026-09-27,New starter,P4,Closed,1746,London
+FX-4210,2026-09-06,Laptop,P3,Closed,1324,London
+FX-4211,2026-10-28,Printer,P2,Closed,258,Leeds
+FX-4212,2026-09-30,VPN,P3,Closed,1717,London
+FX-4213,2026-09-18,Software,P2,Closed,412,Leeds
+FX-4214,2026-10-17,New starter,P4,Closed,1728,Dublin
+FX-4215,2026-09-30,Software,P3,Closed,1017,Leeds
+FX-4216,2026-10-22,Printer,P4,Closed,2633,Dublin
+FX-4217,2026-09-30,Password/MFA,P3,Open,,Leeds
+FX-4218,2026-09-27,Printer,P3,Closed,1664,London
+FX-4219,2026-09-05,Laptop,P3,Open,,Leeds
